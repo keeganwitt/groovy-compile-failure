@@ -9,8 +9,8 @@ public class GroovyCompileFailureApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GroovyCompileFailureApplication.class, args);
 
-		System.out.println(new DogBuilder("dog").name("dog").getAnimal());
-		System.out.println(new CatBuilder("dog").name("cat").getAnimal());
+		System.out.println(new DogBuilder().name("dog").getAnimal());
+		System.out.println(new CatBuilder().name("cat").getAnimal());
 	}
 
 

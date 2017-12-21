@@ -6,9 +6,8 @@ class AnimalBuilder<T extends Animal> {
 
     T animal;
 
-    AnimalBuilder(String name, T animal) {
+    AnimalBuilder(T animal) {
         this.animal = animal
-        animal.setName(name)
     }
 
     T getAnimal() {
