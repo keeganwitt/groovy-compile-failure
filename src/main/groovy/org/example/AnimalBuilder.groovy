@@ -1,13 +1,14 @@
-package com.example.groovycompilefailure.groovycompilefailure
+package org.example
 
-import com.example.groovycompilefailure.domain.Animal
+import org.example.domain.Animal
 
 class AnimalBuilder<T extends Animal> {
 
     T animal;
 
-    AnimalBuilder(T animal) {
+    AnimalBuilder(String name, T animal) {
         this.animal = animal
+        animal.setName(name)
     }
 
     T getAnimal() {

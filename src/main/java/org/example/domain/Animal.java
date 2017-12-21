@@ -1,4 +1,4 @@
-package com.example.groovycompilefailure.domain;
+package org.example.domain;
 
 public abstract class Animal {
 
