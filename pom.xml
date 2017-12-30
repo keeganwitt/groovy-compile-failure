@@ -1,73 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example</groupId>
-	<artifactId>groovy-compile-failure</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <groupId>org.example</groupId>
+    <artifactId>groovy-compile-failure</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-	<name>groovy-compile-failure</name>
-	<description>Demo project for Spring Boot</description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <groovy.version>2.4.13</groovy.version>
+    </properties>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovy.version}</version>
+            <classifier>indy</classifier>
+        </dependency>
+    </dependencies>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>addSources</goal>
-							<goal>addTestSources</goal>
-							<goal>generateStubs</goal>
-							<goal>compile</goal>
-							<goal>testGenerateStubs</goal>
-							<goal>testCompile</goal>
-							<goal>removeStubs</goal>
-							<goal>removeTestStubs</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-
-
+    <profiles>
+        <profile>
+            <id>gmavenplus</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.7.0</version>
+                        <configuration>
+                            <compilerArgs>
+                                <arg>-Xdiags:verbose</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <!--<execution>-->
+                                <!--<id>use-existing-stubs</id>-->
+                                <!--<phase>generate-sources</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>addStubSources</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                            <!--<execution>-->
+                                <!--<id>use-existing-test-stubs</id>-->
+                                <!--<phase>generate-test-sources</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>addTestStubSources</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                            <execution>
+                                <id>build</id>
+                                <goals>
+                                    <goal>addSources</goal>
+                                    <!--<goal>addTestSources</goal>-->
+                                    <goal>generateStubs</goal>
+                                    <goal>compile</goal>
+                                    <!--<goal>generateTestStubs</goal>-->
+                                    <!--<goal>compileTests</goal>-->
+                                    <goal>removeStubs</goal>
+                                    <!--<goal>removeTestStubs</goal>-->
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>gmaven</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.7.0</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.gmaven</groupId>
+                        <artifactId>gmaven-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <configuration>
+                                    <providerSelection>2.0</providerSelection>
+                                </configuration>
+                                <goals>
+                                    <goal>generateStubs</goal>
+                                    <goal>compile</goal>
+                                    <!--<goal>generateTestStubs</goal>-->
+                                    <!--<goal>testCompile</goal>-->
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.gmaven.runtime</groupId>
+                                <artifactId>gmaven-runtime-2.0</artifactId>
+                                <version>1.5</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>org.codehaus.groovy</groupId>
+                                        <artifactId>groovy-all</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>${groovy.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>groovyc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-compile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>default-testCompile</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <target>
+                                        <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">
+                                            <classpath refid="maven.compile.classpath"/>
+                                        </taskdef>
+                                        <mkdir dir="${project.build.outputDirectory}"/>
+                                        <groovyc keepStubs="true"
+                                                 stubdir="${project.build.directory}/generated-sources/groovy-stubs/main"
+                                                 srcdir="${basedir}/src/main/groovy" destdir="${project.build.outputDirectory}"
+                                                 encoding="${project.build.sourceEncoding}">
+                                            <classpath refid="maven.compile.classpath"/>
+                                            <src>
+                                                <pathelement path="${project.basedir}/src/main/java"/>
+                                            </src>
+                                            <javac source="${maven.compiler.source}" target="${maven.compiler.target}"/>
+                                        </groovyc>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <!--<execution>-->
+                                <!--<id>test-compile</id>-->
+                                <!--<phase>process-test-classes</phase>-->
+                                <!--<configuration>-->
+                                    <!--<target>-->
+                                        <!--<taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc">-->
+                                            <!--<classpath refid="maven.test.classpath"/>-->
+                                        <!--</taskdef>-->
+                                        <!--<mkdir dir="${project.build.testOutputDirectory}"/>-->
+                                        <!--<groovyc keepStubs="true"-->
+                                                 <!--stubdir="${project.build.directory}/generated-sources/groovy-stubs/test"-->
+                                                 <!--srcdir="${project.basedir}/src/test/groovy"-->
+                                                 <!--destdir="${project.build.testOutputDirectory}"-->
+                                                 <!--encoding="${project.build.sourceEncoding}">-->
+                                            <!--<classpath refid="maven.test.classpath"/>-->
+                                            <!--<src>-->
+                                                <!--<pathelement path="${project.basedir}/src/test/java"/>-->
+                                            <!--</src>-->
+                                            <!--<javac source="${maven.compiler.source}" target="${maven.compiler.target}"/>-->
+                                        <!--</groovyc>-->
+                                    <!--</target>-->
+                                <!--</configuration>-->
+                                <!--<goals>-->
+                                    <!--<goal>run</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy-ant</artifactId>
+                                <version>${groovy.version}</version>
+                                <classifier>indy</classifier>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

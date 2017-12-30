@@ -1,21 +1,4 @@
 package org.example.domain;
 
-public abstract class Animal {
-
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "name='" + name + '\'' +
-                '}';
-    }
+public class Animal {
 }
